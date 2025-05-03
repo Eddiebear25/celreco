@@ -1,6 +1,6 @@
+'use client';
+
 import type { Metadata } from 'next';
-import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { DemoBadge } from '@/components/DemoBadge';
 import { routing } from '@/libs/i18nNavigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
@@ -48,11 +48,7 @@ export default async function RootLayout(props: {
 
   setRequestLocale(locale);
 
-  // Using internationalization in Client Components
   const messages = await getMessages();
-
-  // The `suppressHydrationWarning` attribute in <body> is used to prevent hydration errors caused by Sentry Overlay,
-  // which dynamically adds a `style` attribute to the body tag.
 
   return (
     <html lang={locale}>
@@ -61,10 +57,7 @@ export default async function RootLayout(props: {
           locale={locale}
           messages={messages}
         >
-          <PostHogProvider>
-            {props.children}
-          </PostHogProvider>
-          <DemoBadge />
+          {props.children}
         </NextIntlClientProvider>
       </body>
     </html>
