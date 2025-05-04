@@ -1,7 +1,8 @@
-import { shopifyClient } from './client' // Shopify 클라이언트 임포트 필요
+import { shopifyClient } from './client'
+import { gql } from 'graphql-request'
 
 export async function getMenu(handle: string) {
-  const query = `
+  const query = gql`
     query getMenu($handle: String!) {
       menu(handle: $handle) {
         items {
@@ -10,19 +11,17 @@ export async function getMenu(handle: string) {
         }
       }
     }
-  `
-
-  const variables = { handle }
+  `;
 
   try {
-    const data = await shopifyClient.request(query, variables)
-    return data
+    const data = await shopifyClient.request(query, { handle });
+    return data;
   } catch (error) {
-    console.error('Error fetching menu:', error)
+    console.warn('⚠️ getMenu failed: using fallback empty menu');
     return {
       menu: {
         items: [],
       },
-    }
+    };
   }
 }
