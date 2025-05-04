@@ -124,3 +124,6 @@ export default async function Index(props: IIndexProps) {
     </>
   );
 }
+export function generateStaticParams() {
+  return [];
+}
