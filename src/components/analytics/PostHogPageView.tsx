@@ -13,7 +13,7 @@ const PostHogPageView = () => {
   useEffect(() => {
     if (pathname && posthog) {
       let url = window.origin + pathname;
-      if (searchParams.toString()) {
+      if (searchParams?.toString()) {  // Optional chaining 추가
         url = `${url}?${searchParams.toString()}`;
       }
 
